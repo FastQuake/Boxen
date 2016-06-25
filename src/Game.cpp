@@ -82,7 +82,7 @@ void Game::run() {
             }
 
             if(e.type == SDL_MOUSEMOTION && SDL_GetWindowFlags(window) & SDL_WINDOW_INPUT_FOCUS) {
-                cam.turn(e.motion.yrel*dt*MOUSE_SENSE, e.motion.xrel*dt*MOUSE_SENSE);
+                cam.turn(-e.motion.yrel*dt*MOUSE_SENSE, e.motion.xrel*dt*MOUSE_SENSE);
             }
         }
 

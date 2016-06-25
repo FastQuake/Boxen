@@ -1,5 +1,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <cmath>
+#include <iostream>
 #include "Camera.hpp"
 using namespace std;
 
@@ -11,7 +12,7 @@ Camera::Camera() {
     right = glm::vec3(1, 0, 0);
     up = glm::vec3(0, 1, 0);
 
-    pitch = M_PI;
+    pitch = 0;
     yaw = 0;
     updateLookat();
 }
