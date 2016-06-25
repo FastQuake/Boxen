@@ -6,6 +6,7 @@
 #include "Renderer/Model.hpp"
 #include "Renderer/Camera.hpp"
 #include "ResourceManager/ResourceManager.hpp"
+#include "Timer.hpp"
 
 #include <iostream>
 
@@ -49,6 +50,8 @@ void Game::run() {
     bool running = true;
     SDL_Event e;
     renderer.setProj(glm::perspective<float>(M_PI/2.0, 800/600, 1.0, 1000.0));
+    Timer timer;
+    float dt = 0.0;
     while(running) {
         while(SDL_PollEvent(&e)) {
             if(e.type == SDL_QUIT) {
@@ -103,6 +106,9 @@ void Game::run() {
         cube.draw(renderer.shaderUnis);
 
         SDL_GL_SwapWindow(window);
+
+        dt = timer.getElapsedTime();
+        timer.reset();
     }
 }
 
