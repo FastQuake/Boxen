@@ -13,6 +13,10 @@ void Renderer::init() {
     }
 
     glClearColor(0, 0, 0, 1);
+
+
+    /* Load shader in */
+    shader.init("./data/shaders/vertex.glsl", "./data/shaders/fragment.glsl");
 }
 
 void Renderer::clear(bool depth) {

@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "Error.hpp"
+#include "Renderer/Quad.hpp"
 
 #define SDL_ERROR "SDL_ERROR"
 #define BITS_PER_PIXEL 8
