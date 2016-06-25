@@ -18,6 +18,7 @@ class Camera {
         glm::vec3 right;
         glm::vec3 up;
         float pitch, yaw;
+        void updateLookat();
 };
 
 #endif

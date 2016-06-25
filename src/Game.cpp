@@ -7,8 +7,12 @@
 #include "Renderer/Camera.hpp"
 #include "ResourceManager/ResourceManager.hpp"
 
+#include <iostream>
+
 #define SDL_ERROR "SDL_ERROR"
 #define BITS_PER_PIXEL 8
+
+using namespace std;
 
 Game::Game() {
     if(SDL_Init(SDL_INIT_EVERYTHING) == -1) {
@@ -75,6 +79,22 @@ void Game::run() {
                         cam.turn(0, -0.2);
                         break;
                 }
+            }
+
+            if(e.type == SDL_WINDOWEVENT) {
+                switch(e.window.event) {
+                    case SDL_WINDOWEVENT_FOCUS_GAINED:
+                        SDL_SetRelativeMouseMode(SDL_TRUE);
+                        break;
+                    case SDL_WINDOWEVENT_FOCUS_LOST:
+                        SDL_SetRelativeMouseMode(SDL_FALSE);
+                        break;
+                }
+            }
+
+            if(e.type == SDL_MOUSEMOTION && SDL_GetWindowFlags(window) & SDL_WINDOW_INPUT_FOCUS) {
+                cout << "xrel: " << e.motion.xrel << " yrel: " << e.motion.yrel << endl;
+                cam.turn(0.002*e.motion.xrel, 0.002*e.motion.yrel);
             }
         }
 
