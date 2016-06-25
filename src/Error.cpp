@@ -1,4 +1,4 @@
-#include "error.hpp"
+#include "Error.hpp"
 
 Error::Error(std::string type, std::string message, std::string file, int line) {
     this->type = type;

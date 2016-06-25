@@ -1,5 +1,5 @@
-#include "game.hpp"
-#include "error.hpp"
+#include "Game.hpp"
+#include "Error.hpp"
 
 #define SDL_ERROR "SDL_ERROR"
 #define BITS_PER_PIXEL 8
@@ -27,6 +27,8 @@ Game::Game() {
 
     context = SDL_GL_CreateContext(window);
     checkSDLError();
+
+    renderer.init();
 }
 
 void Game::run() {
@@ -38,6 +40,8 @@ void Game::run() {
                 running = false;
             }
         }
+
+        renderer.clear(false);
 
         SDL_GL_SwapWindow(window);
     }

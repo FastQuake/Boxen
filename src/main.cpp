@@ -1,6 +1,6 @@
 #include <iostream>
-#include "game.hpp"
-#include "error.hpp"
+#include "Game.hpp"
+#include "Error.hpp"
 
 #define UNUSED(x) x=x
 #define BITS_PER_PIXEL 8
