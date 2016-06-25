@@ -7,7 +7,7 @@ using namespace std;
 
 void initSDL();
 
-int parseArgs(int argc, char *argv[]) {
+bool parseArgs(int argc, char *argv[]) {
     UNUSED(argc);
     UNUSED(argv);
 
