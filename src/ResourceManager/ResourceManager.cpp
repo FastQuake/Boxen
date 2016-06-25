@@ -1,16 +1,29 @@
-#include "ResourceManager.hpp"
 #include <SDL2/SDL_image.h>
-
+#include "ResourceManager.hpp"
+#include "../Error.hpp"
 using namespace std;
 
-Texture::Texture(int width, int height, GLuint glName) {
-    this->width = width;
-    this->height = height;
-    this->glName = glName;
-}
+#define RESOURCE_ERROR "RESOURCE MANAGER ERROR"
+
+ResourceManager *ResourceManager::rm = NULL;
 
 ResourceManager::ResourceManager(Renderer &renderer) {
     this->renderer = &renderer;
+}
+
+void ResourceManager::createInstance(Renderer &renderer) {
+    if(rm != NULL) {
+        throw ErrMsg(RESOURCE_ERROR, "Resource manager instance already created");
+    }
+
+    ResourceManager::rm = new ResourceManager(renderer);
+}
+
+ResourceManager *ResourceManager::instance() {
+    if(rm == NULL) {
+        throw ErrMsg(RESOURCE_ERROR, "Resource manager has not been initalized");
+    }
+    return rm;
 }
 
 Texture *ResourceManager::loadTexture(string name) {
@@ -21,6 +34,10 @@ Texture *ResourceManager::loadTexture(string name) {
     }
 
     SDL_Surface *image = IMG_Load(name.c_str());
+    // TODO switch to load default texture
+    if(image == NULL) {
+        throw ErrMsg(RESOURCE_ERROR, "Could not load image: "+name);
+    }
     int width = image->w;
     int height = image->h;
     GLenum glFormat;
