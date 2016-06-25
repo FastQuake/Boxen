@@ -32,6 +32,17 @@ void Camera::turn(float pitch, float yaw) {
 void Camera::rawTurn(float pitch, float yaw) {
     this->pitch += pitch;
     this->yaw += yaw;
+
+    if(this->pitch >= glm::radians(89.0))
+        this->pitch = glm::radians(89.0);
+    if(this->pitch <= glm::radians(-89.0))
+        this->pitch = glm::radians(-89.0);
+    if(this->yaw > M_PI*2.0)
+        this->yaw = this->yaw - M_PI*2.0;
+    if(this->yaw < -M_PI*2.0)
+        this->yaw = -(abs(this->yaw)-M_PI*2.0);
+
+    cout << "pitch: " << this->pitch << " yaw: " << this->yaw << endl;
     updateLookat();
 }
 
@@ -39,7 +50,7 @@ void Camera::updateLookat() {
     lookat.x = cos(pitch) * cos(yaw);
     lookat.y = sin(pitch);
     lookat.z = cos(pitch) * sin(yaw);
-    right = glm::cross(lookat, up);
+    right = glm::normalize(glm::cross(lookat, up));
 }
 
 glm::mat4 Camera::view() {
