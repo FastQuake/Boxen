@@ -43,7 +43,7 @@ void Game::run() {
     Camera cam;
     bool running = true;
     SDL_Event e;
-    renderer.setProj(glm::perspective<float>(glm::pi<float>()/2.0, 800/600, 1.0, 1000.0));
+    renderer.setProj(glm::perspective<float>(M_PI/2.0, 800/600, 1.0, 1000.0));
     while(running) {
         while(SDL_PollEvent(&e)) {
             if(e.type == SDL_QUIT) {
@@ -63,6 +63,12 @@ void Game::run() {
                         break;
                     case SDLK_d:
                         cam.strafe(1);
+                        break;
+                    case SDLK_LEFT:
+                        cam.turn(0, 0.2);
+                        break;
+                    case SDLK_RIGHT:
+                        cam.turn(0, -0.2);
                         break;
                 }
             }
