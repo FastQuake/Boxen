@@ -45,12 +45,14 @@ Texture *ResourceManager::loadTexture(string name) {
     }
     int width = image->w;
     int height = image->h;
-    GLenum glFormat;
+    GLenum glFormat = GL_RGB;
     switch(image->format->BytesPerPixel) {
         case 3: // *Probably* RGB
             glFormat = GL_RGB;
+            break;
         case 4: // *Probably* RGBA
             glFormat = GL_RGBA;
+            break;
     }
 
     GLuint texName = this->renderer->genTexture(width, height,

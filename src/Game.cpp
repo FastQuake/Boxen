@@ -1,3 +1,4 @@
+#include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "Game.hpp"
@@ -7,8 +8,6 @@
 #include "Renderer/Camera.hpp"
 #include "ResourceManager/ResourceManager.hpp"
 #include "Timer.hpp"
-
-#include <iostream>
 
 #define SDL_ERROR "SDL_ERROR"
 #define BITS_PER_PIXEL 8
@@ -47,6 +46,7 @@ Game::Game() {
 }
 
 void Game::run() {
+    Model fixit("mrfixit.iqm");
     Model cube("cube.iqm");
     Camera cam;
     bool running = true;
@@ -102,6 +102,7 @@ void Game::run() {
         renderer.setView(cam.view());
         renderer.clear(true);
         cube.draw(renderer.shaderUnis);
+        fixit.draw(renderer.shaderUnis);
 
         SDL_GL_SwapWindow(window);
 
