@@ -1,6 +1,9 @@
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "Game.hpp"
 #include "Error.hpp"
 #include "Renderer/Quad.hpp"
+#include "Renderer/Camera.hpp"
 #include "ResourceManager/ResourceManager.hpp"
 
 #define SDL_ERROR "SDL_ERROR"
@@ -37,15 +40,35 @@ Game::Game() {
 
 void Game::run() {
     Quad quad("./data/textures/box.png");
+    Camera cam;
     bool running = true;
     SDL_Event e;
+    renderer.setProj(glm::perspective<float>(glm::pi<float>()/2.0, 800/600, 1.0, 1000.0));
     while(running) {
         while(SDL_PollEvent(&e)) {
             if(e.type == SDL_QUIT) {
                 running = false;
             }
+
+            if(e.type == SDL_KEYDOWN) {
+                switch(e.key.keysym.sym) {
+                    case SDLK_w:
+                        cam.move(1);
+                        break;
+                    case SDLK_s:
+                        cam.move(-1);
+                        break;
+                    case SDLK_a:
+                        cam.strafe(-1);
+                        break;
+                    case SDLK_d:
+                        cam.strafe(1);
+                        break;
+                }
+            }
         }
 
+        renderer.setView(cam.view());
         renderer.clear(false);
         quad.draw(renderer.shaderUnis);
 
