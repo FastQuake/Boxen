@@ -1,14 +1,26 @@
 #include <iostream>
 #include <SDL2/SDL.h>
-
+#define UNUSED(x) x=x
 #define BITS_PER_PIXEL 8
 
 using namespace std;
 
 void initSDL();
 
-int main(int argc, char **argv) {
+int parseArgs(int argc, char *argv[]) {
+    UNUSED(argc);
+    UNUSED(argv);
+
+    return false;
+}
+
+int main(int argc, char *argv[]) {
     cout << "Hello World!" << endl;
+
+    if(parseArgs(argc, argv)) {
+        cout << "Boxen voxel engine help" << endl;
+        return 0;
+    }
 
     initSDL();
     SDL_Window *window = SDL_CreateWindow("Hello World!",
