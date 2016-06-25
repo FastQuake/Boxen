@@ -27,3 +27,14 @@ void Renderer::clear(bool depth) {
 
     glClear(flags);
 }
+
+GLuint Renderer::genTexture(int width, int height, GLenum format, void *pixels) {
+    GLuint texName;
+    glGenTextures(1, &texName);
+
+    glBindTexture(GL_TEXTURE_2D, texName);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height,
+                 0, format, GL_UNSIGNED_BYTE, pixels);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    return texName;
+}

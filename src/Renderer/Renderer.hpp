@@ -8,6 +8,7 @@ class Renderer {
 
         void init();
         void clear(bool depth);
+        GLuint genTexture(int width, int height, GLenum format, void *pixels);
     private:
         ShaderProgram shader;
 };
