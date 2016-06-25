@@ -25,9 +25,7 @@ void Camera::strafe(float amount) {
 }
 
 void Camera::turn(float pitch, float yaw) {
-    this->pitch += speed*pitch;
-    this->yaw += speed*yaw;
-    updateLookat();
+    this->rawTurn(speed*pitch, speed*yaw);
 }
 
 void Camera::rawTurn(float pitch, float yaw) {
