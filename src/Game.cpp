@@ -53,6 +53,9 @@ void Game::run() {
 
             if(e.type == SDL_KEYDOWN) {
                 switch(e.key.keysym.sym) {
+                    case SDLK_ESCAPE:
+                        running = false;
+                        break;
                     case SDLK_w:
                         cam.move(1);
                         break;

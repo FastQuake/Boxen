@@ -36,7 +36,6 @@ ModelData::ModelData(const IQMModelData &model) {
     ResourceManager *rm = ResourceManager::instance();
 
     for(size_t i = 0; i < model.textures.size(); i++) {
-        cout << "LOADING TEXTURE " << model.textures[i] << endl;
         textures.push_back(rm->loadTexture(model.textures[i])); 
     }
 
