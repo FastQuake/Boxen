@@ -13,6 +13,8 @@
 #define SDL_ERROR "SDL_ERROR"
 #define BITS_PER_PIXEL 8
 
+#define MOUSE_SENSE 100.0
+
 using namespace std;
 
 Game::Game() {
@@ -49,9 +51,11 @@ void Game::run() {
     Camera cam;
     bool running = true;
     SDL_Event e;
-    renderer.setProj(glm::perspective<float>(M_PI/2.0, 800/600, 1.0, 1000.0));
+    renderer.setProj(glm::perspective<float>(M_PI/2.0, 800/600, 0.1, 1000.0));
     Timer timer;
     float dt = 0.0;
+
+    const uint8_t *keystate = SDL_GetKeyboardState(NULL);
     while(running) {
         while(SDL_PollEvent(&e)) {
             if(e.type == SDL_QUIT) {
@@ -62,24 +66,6 @@ void Game::run() {
                 switch(e.key.keysym.sym) {
                     case SDLK_ESCAPE:
                         running = false;
-                        break;
-                    case SDLK_w:
-                        cam.move(1);
-                        break;
-                    case SDLK_s:
-                        cam.move(-1);
-                        break;
-                    case SDLK_a:
-                        cam.strafe(-1);
-                        break;
-                    case SDLK_d:
-                        cam.strafe(1);
-                        break;
-                    case SDLK_LEFT:
-                        cam.turn(0, 0.2);
-                        break;
-                    case SDLK_RIGHT:
-                        cam.turn(0, -0.2);
                         break;
                 }
             }
@@ -96,9 +82,21 @@ void Game::run() {
             }
 
             if(e.type == SDL_MOUSEMOTION && SDL_GetWindowFlags(window) & SDL_WINDOW_INPUT_FOCUS) {
-                cout << "xrel: " << e.motion.xrel << " yrel: " << e.motion.yrel << endl;
-                cam.turn(e.motion.yrel, e.motion.xrel);
+                cam.turn(e.motion.yrel*dt*MOUSE_SENSE, e.motion.xrel*dt*MOUSE_SENSE);
             }
+        }
+
+        if(keystate[SDL_GetScancodeFromKey(SDLK_w)]) {
+            cam.move(10*dt);
+        }
+        if(keystate[SDL_GetScancodeFromKey(SDLK_s)]) {
+            cam.move(-10*dt);
+        }
+        if(keystate[SDL_GetScancodeFromKey(SDLK_a)]) {
+            cam.strafe(-10*dt);
+        }
+        if(keystate[SDL_GetScancodeFromKey(SDLK_d)]) {
+            cam.strafe(10*dt);
         }
 
         renderer.setView(cam.view());
