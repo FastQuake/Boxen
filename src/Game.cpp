@@ -94,7 +94,7 @@ void Game::run() {
 
             if(e.type == SDL_MOUSEMOTION && SDL_GetWindowFlags(window) & SDL_WINDOW_INPUT_FOCUS) {
                 cout << "xrel: " << e.motion.xrel << " yrel: " << e.motion.yrel << endl;
-                cam.turn(0.002*e.motion.xrel, 0.002*e.motion.yrel);
+                cam.turn(e.motion.yrel, e.motion.xrel);
             }
         }
 

@@ -12,12 +12,13 @@ class Camera {
         void move(float amount);
         void strafe(float amount);
         void turn(float pitch, float yaw);
+        void rawTurn(float pitch, float yaw);
 
         glm::mat4 view();
     private:
         glm::vec3 right;
         glm::vec3 up;
-        float pitch, yaw;
+        float pitch, yaw, speed;
         void updateLookat();
 };
 

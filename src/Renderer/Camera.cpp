@@ -4,6 +4,7 @@
 using namespace std;
 
 Camera::Camera() {
+    speed = 0.002; // sensitivity, basically; maybe should be an input setting?
     position = glm::vec3(0, 0, 0);
     lookat = glm::vec3(0, 0, 0);
 
@@ -24,6 +25,12 @@ void Camera::strafe(float amount) {
 }
 
 void Camera::turn(float pitch, float yaw) {
+    this->pitch += speed*pitch;
+    this->yaw += speed*yaw;
+    updateLookat();
+}
+
+void Camera::rawTurn(float pitch, float yaw) {
     this->pitch += pitch;
     this->yaw += yaw;
     updateLookat();
