@@ -4,3 +4,4 @@ boxen
 *.swp
 *.pyc
 .ycm_extra_conf.py
+*.trace

@@ -1,6 +1,7 @@
 #include "Game.hpp"
 #include "Error.hpp"
 #include "Renderer/Quad.hpp"
+#include "ResourceManager/ResourceManager.hpp"
 
 #define SDL_ERROR "SDL_ERROR"
 #define BITS_PER_PIXEL 8
@@ -30,9 +31,12 @@ Game::Game() {
     checkSDLError();
 
     renderer.init();
+
+    ResourceManager::createInstance(renderer);
 }
 
 void Game::run() {
+    Quad quad("./data/textures/box.png");
     bool running = true;
     SDL_Event e;
     while(running) {
@@ -43,6 +47,7 @@ void Game::run() {
         }
 
         renderer.clear(false);
+        quad.draw(renderer.shaderUnis);
 
         SDL_GL_SwapWindow(window);
     }
