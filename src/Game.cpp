@@ -3,6 +3,7 @@
 #include "Game.hpp"
 #include "Error.hpp"
 #include "Renderer/Quad.hpp"
+#include "Renderer/Model.hpp"
 #include "Renderer/Camera.hpp"
 #include "ResourceManager/ResourceManager.hpp"
 
@@ -39,7 +40,7 @@ Game::Game() {
 }
 
 void Game::run() {
-    Quad quad("./data/textures/box.png");
+    Model cube("cube.iqm");
     Camera cam;
     bool running = true;
     SDL_Event e;
@@ -75,8 +76,8 @@ void Game::run() {
         }
 
         renderer.setView(cam.view());
-        renderer.clear(false);
-        quad.draw(renderer.shaderUnis);
+        renderer.clear(true);
+        cube.draw(renderer.shaderUnis);
 
         SDL_GL_SwapWindow(window);
     }

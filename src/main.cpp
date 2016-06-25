@@ -1,10 +1,6 @@
 #include <iostream>
 #include "Game.hpp"
 #include "Error.hpp"
-
-#define UNUSED(x) x=x
-#define BITS_PER_PIXEL 8
-
 using namespace std;
 
 bool parseArgs(int argc, char *argv[]) {

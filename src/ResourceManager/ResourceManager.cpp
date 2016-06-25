@@ -5,6 +5,10 @@ using namespace std;
 
 #define RESOURCE_ERROR "RESOURCE MANAGER ERROR"
 
+#define BASE_DIR "./data/"
+#define MODEL_DIR BASE_DIR "models/"
+#define TEX_DIR BASE_DIR "textures/"
+
 ResourceManager *ResourceManager::rm = NULL;
 
 ResourceManager::ResourceManager(Renderer &renderer) {
@@ -33,10 +37,11 @@ Texture *ResourceManager::loadTexture(string name) {
         return it->second;
     }
 
-    SDL_Surface *image = IMG_Load(name.c_str());
+    string filename = TEX_DIR + name;
+    SDL_Surface *image = IMG_Load(filename.c_str());
     // TODO switch to load default texture
     if(image == NULL) {
-        throw ErrMsg(RESOURCE_ERROR, "Could not load image: "+name);
+        throw ErrMsg(RESOURCE_ERROR, "Could not load image: "+filename);
     }
     int width = image->w;
     int height = image->h;
@@ -54,4 +59,22 @@ Texture *ResourceManager::loadTexture(string name) {
     this->textures.insert(pair<string, Texture*>(name, newTex));
     SDL_FreeSurface(image);
     return newTex;
+}
+
+ModelData *ResourceManager::loadIqmModel(string name) {
+    map<string, ModelData*>::iterator it;
+    it = this->models.find(name);
+    if(it != this->models.end()) {
+        return it->second;
+    }
+
+    string filename = MODEL_DIR + name;
+    IQMModelData data;
+    if(loadIQM(filename, data) == false) {
+        throw ErrMsg(RESOURCE_ERROR, "IQM file does not exists: "+filename);
+    }
+
+    ModelData *md = new ModelData(data);
+    models.insert(pair<string, ModelData*>(name, md));
+    return md;
 }

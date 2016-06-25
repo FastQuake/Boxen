@@ -1,6 +1,7 @@
 #ifndef ERROR_HPP
 #define ERROR_HPP
 #include <string>
+#define UNUSED(x) (void)x
 
 #define ErrMsg(type, msg) Error(type, msg, __FILE__, __LINE__)
 
