@@ -9,10 +9,31 @@ using namespace std;
 #define MODEL_DIR BASE_DIR "models/"
 #define TEX_DIR BASE_DIR "textures/"
 
+SDL_PixelFormat formatRGB;
+SDL_PixelFormat formatRGBA;
+
 ResourceManager *ResourceManager::rm = NULL;
 
 ResourceManager::ResourceManager(Renderer &renderer) {
     this->renderer = &renderer;
+
+    formatRGB.format = SDL_PIXELFORMAT_RGB888;
+    formatRGB.palette = NULL;
+    formatRGB.BitsPerPixel = 24;
+    formatRGB.BytesPerPixel = 3;
+    formatRGB.Rmask = 0x0000FF;
+    formatRGB.Gmask = 0x00FF00;
+    formatRGB.Bmask = 0xFF0000;
+    formatRGB.Amask = 0x000000;
+
+    formatRGBA.format = SDL_PIXELFORMAT_RGBA8888;
+    formatRGBA.palette = NULL;
+    formatRGBA.BitsPerPixel = 32;
+    formatRGBA.BytesPerPixel = 4;
+    formatRGBA.Rmask = 0x000000FF;
+    formatRGBA.Gmask = 0x0000FF00;
+    formatRGBA.Bmask = 0x00FF0000;
+    formatRGBA.Amask = 0xFF000000;
 }
 
 void ResourceManager::createInstance(Renderer &renderer) {
@@ -55,11 +76,19 @@ Texture *ResourceManager::loadTexture(string name) {
             break;
     }
 
+    SDL_Surface *newImg;
+    if(glFormat == GL_RGB) {
+        newImg = SDL_ConvertSurface(image, &formatRGB, 0);
+    } else {
+        newImg = SDL_ConvertSurface(image, &formatRGBA, 0);
+    }
+
     GLuint texName = this->renderer->genTexture(width, height,
-                                                glFormat, image->pixels);
+                                                glFormat, newImg->pixels);
     Texture *newTex = new Texture(width, height, texName);
     this->textures.insert(pair<string, Texture*>(name, newTex));
     SDL_FreeSurface(image);
+    SDL_FreeSurface(newImg);
     return newTex;
 }
 
