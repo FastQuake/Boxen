@@ -42,7 +42,6 @@ void Camera::rawTurn(float pitch, float yaw) {
     if(this->yaw < -M_PI*2.0)
         this->yaw = -(abs(this->yaw)-M_PI*2.0);
 
-    cout << "pitch: " << this->pitch << " yaw: " << this->yaw << endl;
     updateLookat();
 }
 
